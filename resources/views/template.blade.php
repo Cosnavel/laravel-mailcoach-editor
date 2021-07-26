@@ -1,4 +1,4 @@
-@component('mailcoach::mails.layout.mail')
+@component('mailcoach::mails.layout.newsletter')
 
 ::content::
 
