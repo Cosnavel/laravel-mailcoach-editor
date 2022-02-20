@@ -12,8 +12,9 @@ import ImageTool from '@editorjs/image';
 import Table from 'editorjs-table';
 import InlineCode from '@editorjs/inline-code';
 import Code from './tools/code';
+import Button from './tools/button/button';
 
-document.addEventListener('turbolinks:load', initEditor);
+document.addEventListener('turbo:load', initEditor);
 document.addEventListener('load', initEditor);
 document.addEventListener('before-visit', confirmBeforeLeaveAndDestroyEditor);
 window.addEventListener('beforeunload', confirmBeforeLeaveAndDestroyEditor);
@@ -30,15 +31,15 @@ function confirmBeforeLeaveAndDestroyEditor(event) {
         return;
     }
 
-    document.removeEventListener('turbolinks:before-visit', confirmBeforeLeaveAndDestroyEditor);
+    document.removeEventListener('turbo:before-visit', confirmBeforeLeaveAndDestroyEditor);
     window.removeEventListener('beforeunload', confirmBeforeLeaveAndDestroyEditor);
     window.editor.destroy();
     window.editor = undefined;
 }
 
 function initEditor() {
-    document.addEventListener('turbolinks:before-visit', confirmBeforeLeaveAndDestroyEditor);
-    document.addEventListener("turbolinks:load", initEditor);
+    document.addEventListener('turbo:before-visit', confirmBeforeLeaveAndDestroyEditor);
+    document.addEventListener("turbo:load", initEditor);
     window.addEventListener('beforeunload', confirmBeforeLeaveAndDestroyEditor);
 
     const node = $('#editor-js');
@@ -88,6 +89,7 @@ function initEditor() {
                 class: Table,
             },
             code: Code,
+            button: Button,
             inlineCode: {
                 class: InlineCode,
                 shortcut: 'CMD+SHIFT+M',

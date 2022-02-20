@@ -3,7 +3,9 @@
 namespace Spatie\MailcoachEditor;
 
 use Spatie\Mailcoach\Domain\Campaign\Models\Concerns\HasHtmlContent;
+use Spatie\Mailcoach\Domain\Campaign\Models\Template;
 use Spatie\Mailcoach\Domain\Shared\Support\Editor\Editor as AbstractEditor;
+use Spatie\Mailcoach\Domain\TransactionalMail\Models\TransactionalMailTemplate;
 
 class Editor implements AbstractEditor
 {
@@ -18,6 +20,7 @@ class Editor implements AbstractEditor
             'body' => $body,
             'template' => $template,
             'model' => $model,
+            'showTestButton' => ! $model instanceof Template && ! $model instanceof TransactionalMailTemplate,
         ])->render();
     }
 
@@ -33,6 +36,9 @@ class Editor implements AbstractEditor
                 $html .= "\n";
             }
         }
+
+        // Replace this in the generated html as Editor.js likes to automatically add the protocol to links
+        $html = str_replace('http://::', '::', $html);
 
         return str_replace('::content::', $html, $template);
     }
